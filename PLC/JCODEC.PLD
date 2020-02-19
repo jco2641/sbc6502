@@ -1,0 +1,86 @@
+Name            JCODEC;
+Partno          JCODEC;
+Revision        01;
+Date            01/17/2020;
+Designer        John O'Connell;
+Company         ;
+Location        USA;
+Assembly        None;
+Device          p22v10;
+
+/****************************************************************/
+/*                                                              */
+/*      This is an address decoder for 6502 microprocessors     */
+/*      This device will provide Enable and select signals      */
+/*      for RAM, ROM and up to 4 I/O devices such as 65C22      */
+/*                                                              */
+/****************************************************************/
+
+/* 
+ *	Inputs:	Clock, R/W, and address lines from 65C02
+ */
+
+Pin 1  =  PHI2;
+Pin 2  =  RW;
+Pin 3  =  A15;
+Pin 4  =  A14;
+Pin 5  =  A13;
+Pin 6  =  A12;
+Pin 7  =  A11;
+Pin 8  =  A10;
+Pin 9  =  A9;
+Pin 10 =  A8;
+Pin 11 =  A7;
+Pin 13 =  A6;
+Pin 14 =  A5;
+Pin 15 =  A4;
+
+
+/*
+ *	Outputs
+ *  22V10 output logic macrocell available input terms
+ *  Pin Terms
+ *  14	8
+ *  15	10
+ *  16	12
+ *  17	14
+ *  18	16
+ *  19	16
+ *  20	14
+ *  21	12
+ *  22	10
+ *  23	8
+ */
+
+Pin 16 = RAM;	/* RAM CS, active low */
+Pin 17 = CS1;	/* VIA #1 CS, active low */
+Pin 18 = CS2;	/* VIA #2 CS, active low */
+Pin 19 = CS3;	/* VIA #3 CS, active low */
+Pin 20 = CS4;	/* VIA #4 CS, active low */
+Pin 21 = ROM;	/* ROM CS, active low */
+Pin 22 = OE;	/* ROM and RAM, active low to enable output to data bus */
+Pin 23 = WE;	/* ROM and RAM, active low to write to the chip from data bus */
+
+
+/* 
+ *  Logic:  Outputs drive active low CS pins on RAM, ROM, and VIA chips
+ *  
+ *  Memory Map
+ *  
+ *  0x0000 - 0x7FFF			32768	Bytes RAM
+ *  0x8000 - 0x800F			16 		Bytes VIA 1
+ *  0x8010 - 0x801F			16 		Bytes VIA 2
+ *  0x8020 - 0x802F			16 		Bytes VIA 3
+ *  0x8030 - 0x803F			16 		Bytes VIA 4
+ *  0x8040 - 0xFFFF			32704	Bytes ROM
+ */
+
+OE	= !(PHI2 & RW);
+WE	= !(PHI2 & !RW);
+RAM = A15;
+CS1 = ! (A15 & !A14 & !A13 & !A12 & !A11 & !A10 & !A9 & !A8 & !A7 & !A6 & !A5 & !A4 );
+CS2 = ! (A15 & !A14 & !A13 & !A12 & !A11 & !A10 & !A9 & !A8 & !A7 & !A6 & !A5 & A4 );
+CS3 = ! (A15 & !A14 & !A13 & !A12 & !A11 & !A10 & !A9 & !A8 & !A7 & !A6 & A5 & !A4 );
+CS4 = ! (A15 & !A14 & !A13 & !A12 & !A11 & !A10 & !A9 & !A8 & !A7 & !A6 & A5 & A4 );
+ROM = ! (A15 & ( A14 # A13 # A12 # A11 # A10 # A9 # A8 # A7 # A6 ));
+

@@ -1,0 +1,32 @@
+
+Starting point for PLC design idea:
+http://sbc.rictor.org/decoder.html
+
+This site and page have been linked in discussions a few times.
+PLCs are a way to implement complex combinational logic that would ordinarily take tens of logic gates in a single IC.
+So I decided to try it.
+
+What I got - Software:
+WinCUPL: https://www.microchip.com/design-centers/fpgas-and-plds/splds-cplds/pld-design-resources
+Serial number from download page: 60008009
+WinCUPL Manual:  http://ww1.microchip.com/downloads/en/DeviceDoc/doc0737.pdf
+
+Hardware:
+22V10 PLD array:  https://www.jameco.com/webapp/wcs/stores/servlet/ProductDisplay?langId=-1&storeId=10001&catalogId=10001&productId=39159
+Programmer: I used my TL866II Plus, and the Xgpro software (windows) that came with it.  It looks like the minipro command line also supports writing to PLCs
+
+I've decided to use all 32K of RAM, and take the 64 bytes for 4 VIAs from the low end of ROM.
+The memory map I came up with:  https://docs.google.com/spreadsheets/d/1dtwUZS-A5DAV1TVMrngq8Xj7K0klu_qNPEEbwgagwu0/edit?usp=sharing
+
+
+CUPL source for memory map
+CUPL simulator input
+CUPL simulator output
+Screenshot of simulator output in comment
+Arduino chip validator source
+Screenshot of validator output in comment
+https://gist.github.com/jco2641/1146407eb2ec3f7b878f308369b9e9a2
+  
+
+
+
