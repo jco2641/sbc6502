@@ -1,6 +1,5 @@
 ; Run an HD44780 driven LCD in 8 bit mode
 ; Assumes LCD did not initialize itself on power up
-; FIXME: Stomps on PORTA of VIA but only uses 3 pins
 
 .export _lcd_init
 .export _lcd_command
@@ -56,48 +55,58 @@ _lcd_write:
 
 _lcd_wait_busy:
     pha
-    lda #$00
-    sta LCD_DATA_DDR        ; Toggle data port to input
+    lda #$7F
+    sta LCD_DATA_DDR        ; Toggle data port pin 7 to input
 
 _checkloop:
-    lda #LCD_RW
+    lda LCD_CONTROL
+    ora #LCD_RW
+    eor #LCD_E
     sta LCD_CONTROL
-    lda #( LCD_RW | LCD_E )
+    ora #LCD_E
     sta LCD_CONTROL
     lda #$80
-    bit LCD_DATA            ; Puts bit 7 read into negative flag, AND value read with A
-    bmi _checkloop          ; Loop if we found a 1 - the LCD is busy
-    stz LCD_CONTROL
+    bit LCD_DATA            ; AND value read with A. Puts bit 7 of result into negative flag.
+    bmi _checkloop          ; Loop if we found a 1 in negative flag - the LCD is busy
+    lda LCD_CONTROL
+    eor #LCD_E
+    eor #LCD_RW
+    sta LCD_CONTROL
     lda #$FF
-    sta LCD_DATA_DDR        ; Put port back to output
+    sta LCD_DATA_DDR        ; Put pin back to output
     pla
     rts
 
 _lcd_send_command:
     sta LCD_DATA
-    lda #LCD_E
+    lda LCD_CONTROL
+    ora #LCD_E
     sta LCD_CONTROL
-    stz LCD_CONTROL
+    eor #LCD_E
+    sta LCD_CONTROL
     rts
 
 _lcd_send_data:
     sta LCD_DATA
-    lda #LCD_RS
+    lda LCD_CONTROL
+    pha
+    ora #LCD_RS
     sta LCD_CONTROL
-    lda #( LCD_RS | LCD_E )
+    ora #LCD_E
     sta LCD_CONTROL
-    lda #LCD_RS
+    eor #LCD_E
     sta LCD_CONTROL
-    stz LCD_CONTROL
+    pla
+    sta LCD_CONTROL
     rts
 
 _via_init:
     lda #$FF
     sta LCD_DATA_DDR
-    lda #( LCD_E | LCD_RS | LCD_RW )
+    lda LCD_CONTROL_DDR
+    ora #( LCD_E | LCD_RS | LCD_RW )
     sta LCD_CONTROL_DDR
     lda #$CC
     sta VIA1_PCR
-    lda #$00
-    sta VIA1_ACR
+    stz VIA1_ACR
     rts
