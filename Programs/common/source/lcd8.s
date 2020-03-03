@@ -14,36 +14,36 @@ LCD_DATA_DDR = VIA1_DDRB
 LCD_CONTROL_DDR = VIA1_DDRA
 
 ; LCD Commands list
-LCD_CMD_CLEAR           = $01
-LCD_CMD_HOME            = $02
-LCD_CMD_ENTRY_MODE      = $04
-LCD_CMD_DISPLAY_MODE    = $08
-LCD_CMD_CURSOR_SHIFT    = $10
-LCD_CMD_FUNCTION_SET    = $20
-LCD_CMD_CGRAM_SET       = $40
-LCD_CMD_DDRAM_SET       = $80
+.export LCD_CMD_CLEAR           = $01
+.export LCD_CMD_HOME            = $02
+.export LCD_CMD_ENTRY_MODE      = $04
+.export LCD_CMD_DISPLAY_MODE    = $08
+.export LCD_CMD_CURSOR_SHIFT    = $10
+.export LCD_CMD_FUNCTION_SET    = $20
+.export LCD_CMD_CGRAM_SET       = $40
+.export LCD_CMD_DDRAM_SET       = $80
 
 ; Entry mode command parameters
-LCD_EM_SHIFT_CURSOR     = $00
-LCD_EM_SHIFT_DISPLAY    = $01
-LCD_EM_DECREMENT        = $00
-LCD_EM_INCREMENT        = $02
+.export LCD_EM_SHIFT_CURSOR     = $00
+.export LCD_EM_SHIFT_DISPLAY    = $01
+.export LCD_EM_DECREMENT        = $00
+.export LCD_EM_INCREMENT        = $02
 
 ; Display mode command parameters
-LCD_DM_CURSOR_NOBLINK   = $00
-LCD_DM_CURSOR_BLINK     = $01
-LCD_DM_CURSOR_OFF       = $00
-LCD_DM_CURSOR_ON        = $02
-LCD_DM_DISPLAY_OFF      = $00
-LCD_DM_DISPLAY_ON       = $04
+.export LCD_DM_CURSOR_NOBLINK   = $00
+.export LCD_DM_CURSOR_BLINK     = $01
+.export LCD_DM_CURSOR_OFF       = $00
+.export LCD_DM_CURSOR_ON        = $02
+.export LCD_DM_DISPLAY_OFF      = $00
+.export LCD_DM_DISPLAY_ON       = $04
 
 ; Function set command parameters
-LCD_FS_FONT5x8          = $00
-LCD_FS_FONT5x10         = $04
-LCD_FS_ONE_LINE         = $00
-LCD_FS_TWO_LINE         = $08
-LCD_FS_4_BIT            = $00
-LCD_FS_8_BIT            = $10
+.export LCD_FS_FONT5x8          = $00
+.export LCD_FS_FONT5x10         = $04
+.export LCD_FS_ONE_LINE         = $00
+.export LCD_FS_TWO_LINE         = $08
+.export LCD_FS_4_BIT            = $00
+.export LCD_FS_8_BIT            = $10
 
 LCD_E  = $80            ; Pin 7
 LCD_RW = $40            ; Pin 6
