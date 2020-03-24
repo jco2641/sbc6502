@@ -5,6 +5,9 @@
     ; 1 MHz clock - 1 us per clock =~ 1000(a) cycles to process loop
 
 _delay_ms:
+    .if fastclock=0
+    rts                 ; Exit when not using 1MHz clock
+    .endif
     phx                 ; 2
     phy                 ; 2
     tax                 ; 2

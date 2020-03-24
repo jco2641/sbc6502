@@ -5,9 +5,10 @@ CL65_BINARY=cl65
 
 CPU_FLAG=--cpu 65C02
 ARCH_FLAG=-t none
+CLOCK_FLAG=-Dfastclock=$(FASTCLOCK)
 
-CC65_FLAGS=$(CPU_FLAG) $(ARCH_FLAG) -O
-CA65_FLAGS=$(CPU_FLAG)
+CC65_FLAGS=$(CPU_FLAG) $(ARCH_FLAG) $(CLOCK_FLAG) -O
+CA65_FLAGS=$(CPU_FLAG) $(CLOCK_FLAG)
 CL65_FLAGS=$(ARCH_FLAG)
 
 # MiniPro will be used to upload the ROM
@@ -45,6 +46,9 @@ COMMON_OBJECTS=$(COMMON_DEPS:%=$(COMMON_BUILD_FOLDER)/%)
 
 # Object files to be generated
 OBJECTS = $(ASM_SOURCES:%.s=$(BUILD_FOLDER)/%.o) $(C_SOURCES:%.c=$(BUILD_FOLDER)/%.o) $(COMMON_OBJECTS)
+
+# Clock mode (set to 0 to skip delays)
+FASTCLOCK=1
 
 # Configuration file for firmware
 FIRMWARE_CFG=../common/firmware.cfg
