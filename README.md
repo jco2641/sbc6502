@@ -16,6 +16,7 @@ Credits
   - gcc
   - make
   - pkg-config
+  - xxd
 - CC65 windows nightly snapshot 
   - https://sourceforge.net/projects/cc65/files/cc65-snapshot-win32.zip/download
   - extract zip file to a folder
