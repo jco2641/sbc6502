@@ -22,15 +22,24 @@ init:
 
 main:
     lda #$FF
+    sta VIA1_DDRA
     sta VIA1_DDRB
+    sta VIA2_DDRA
+    sta VIA2_DDRB
 
 mainloop:
     lda #$AA
+    sta VIA1_PORTA
     sta VIA1_PORTB
+    sta VIA2_PORTA
+    sta VIA2_PORTB
     lda #$FF
     jsr _delay_ms
     lda #$55
-    STA VIA1_PORTB
+    STA VIA1_PORTA
+    sta VIA1_PORTB
+    sta VIA2_PORTA
+    sta VIA2_PORTB
     lda #$FF
     jsr _delay_ms
     jmp mainloop
