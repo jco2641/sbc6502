@@ -77,22 +77,16 @@ _lcd_init:
     jsr _delay_ms
     lda #$03
     jsr _lcd_send_nibble        ; 1
-    lda #$01                    ; DEBUG
-    sta VIA1_PORTA              ; DEBUG
 
     lda #5
     jsr _delay_ms
     lda #$03
     jsr _lcd_send_nibble        ; 2
-    lda #$02                    ; DEBUG
-    sta VIA1_PORTA              ; DEBUG
 
     lda #1
     jsr _delay_ms
     lda #$03
     jsr _lcd_send_nibble        ; 3
-    lda #$03                    ; DEBUG
-    sta VIA1_PORTA              ; DEBUG
 
     lda #1
     jsr _delay_ms
@@ -100,43 +94,27 @@ _lcd_init:
     jsr _lcd_send_nibble        ; 4
     lda #1
     jsr _delay_ms
-    lda #$04                    ; DEBUG
-    sta VIA1_PORTA              ; DEBUG
 
     lda #( LCD_CMD_FUNCTION_SET | LCD_FS_4_BIT | LCD_FS_TWO_LINE | LCD_FS_FONT5x8 )                 ; $28
     jsr _lcd_command            ; 5
-    lda #$05                    ; DEBUG
-    sta VIA1_PORTA              ; DEBUG
 
     lda #( LCD_CMD_DISPLAY_MODE | LCD_DM_DISPLAY_ON | LCD_DM_CURSOR_ON | LCD_DM_CURSOR_NOBLINK )    ; $0E
     jsr _lcd_command            ; 6
-    lda #$06                    ; DEBUG
-    sta VIA1_PORTA              ; DEBUG
 
     lda #( LCD_CMD_ENTRY_MODE | LCD_EM_INCREMENT | LCD_EM_SHIFT_CURSOR )                            ; $06
     jsr _lcd_command            ; 7
-    lda #$07                    ; DEBUG
-    sta VIA1_PORTA              ; DEBUG
 
     lda #LCD_CMD_CLEAR                                                                              ; $00
     jsr _lcd_command            ; 8
-    lda #$08                    ; DEBUG
-    sta VIA1_PORTA              ; DEBUG
 
     pla
     rts
 
 _lcd_command:
     pha
-    lda VIA1_PORTA          ; DEBUG
-    eor #$10                ; DEBUG
-    sta VIA1_PORTA          ; DEBUG
     jsr _lcd_wait_busy
     pla
     jsr _lcd_send_command
-    lda VIA1_PORTA          ; DEBUG
-    eor #$10                ; DEBUG
-    sta VIA1_PORTA          ; DEBUG
     rts
 
 _lcd_write:
@@ -150,9 +128,6 @@ _lcd_wait_busy:
     jsr _via_checkmode
     lda #LCD_RW
     sta LCD_PORT
-    lda VIA1_PORTA          ; DEBUG
-    eor #$20                ; DEBUG
-    sta VIA1_PORTA          ; DEBUG
 
 _checkloop:
     jsr _lcd_read_data
@@ -160,38 +135,23 @@ _checkloop:
                             ; Not busy
     stz LCD_PORT            ; Clean up
     jsr _via_outmode        ; Set port back to output
-    lda VIA1_PORTA          ; DEBUG
-    eor #$20                ; DEBUG
-    sta VIA1_PORTA          ; DEBUG
     rts
 
 _lcd_read_data:
     lda #( LCD_E | LCD_RW )
     sta LCD_PORT            ; Enable lcd
-    lda VIA1_PORTA          ; DEBUG
-    eor #$40                ; DEBUG
-    sta VIA1_PORTA          ; DEBUG
     lda LCD_PORT            ; Read data
     and #$0F                ; Keep data lines
     sta tmp1
     lda #LCD_RW
     sta LCD_PORT            ; Disable
-    lda VIA1_PORTA          ; DEBUG
-    eor #$40                ; DEBUG
-    sta VIA1_PORTA          ; DEBUG
     lda #( LCD_E | LCD_RW )
     sta LCD_PORT            ; Enable 2nd cycle
-    lda VIA1_PORTA          ; DEBUG
-    eor #$40                ; DEBUG
-    sta VIA1_PORTA          ; DEBUG
     lda LCD_PORT            ; Read data
     and #$0F
     sta tmp2
     lda #LCD_RW
     sta LCD_PORT            ; Disable
-    lda VIA1_PORTA          ; DEBUG
-    eor #$40                ; DEBUG
-    sta VIA1_PORTA          ; DEBUG
     lda tmp1
     asl A
     asl A
