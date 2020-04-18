@@ -30,18 +30,16 @@ main:
     ldx #$00
     
 mainloop:
-    lda Output,x
-    beq count
-    jsr _lcd_write
-    inx
-    jmp mainloop
+    lda #<Output
+    ldx #>Output
+    jsr _lcd_print
 
 count:
     ldy #$30        ; ASCII 0
 
 countloop:
     lda #$40
-    jsr movecursor
+    jsr _lcd_set_position
     tya
     cmp #$3A        ; ASCII : (character after 9)
     beq count
@@ -56,11 +54,6 @@ countloop:
     lda #$FA
     jsr _delay_ms
     jmp countloop
-
-movecursor:
-    ora #$80
-    jsr _lcd_command
-    rts
 
 end:
     stp

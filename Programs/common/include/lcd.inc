@@ -1,15 +1,12 @@
 .import _lcd_init
-.import _lcd_command
 .import _lcd_write
-
-.import LCD_CMD_CLEAR
-.import LCD_CMD_HOME
-.import LCD_CMD_ENTRY_MODE
-.import LCD_CMD_DISPLAY_MODE
-.import LCD_CMD_CURSOR_SHIFT
-.import LCD_CMD_FUNCTION_SET
-.import LCD_CMD_CGRAM_SET
-.import LCD_CMD_DDRAM_SET
+.import _lcd_print
+.import _lcd_clear
+.import _lcd_get_position
+.import _lcd_set_position
+.import _lcd_backspace
+.import _lcd_entry_mode
+.import _lcd_display_mode
 
 ; Entry mode command parameters
 .import LCD_EM_SHIFT_CURSOR
@@ -24,11 +21,3 @@
 .import LCD_DM_CURSOR_ON
 .import LCD_DM_DISPLAY_OFF
 .import LCD_DM_DISPLAY_ON
-
-; Function set command parameters
-.import LCD_FS_FONT5x8
-.import LCD_FS_FONT5x10
-.import LCD_FS_ONE_LINE
-.import LCD_FS_TWO_LINE
-.import LCD_FS_4_BIT
-.import LCD_FS_8_BIT
