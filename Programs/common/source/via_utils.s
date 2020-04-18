@@ -4,8 +4,12 @@
       .export _via1_init_portb
       .export _via1_output_porta
       .export _via1_output_portb
+      .export _via2_init_porta
+      .export _via2_init_portb
+      .export _via2_output_porta
+      .export _via2_output_portb
+
       ; TODO: More VIA functions
-      ; TODO: Times 4 VIA chips
       .code
 
 _via1_init_porta:
@@ -22,4 +26,20 @@ _via1_output_porta:
 
 _via1_output_portb:
       sta VIA1_PORTB
+      rts
+
+_via2_init_porta:
+      sta VIA2_DDRA
+      rts
+
+_via2_init_portb:
+      sta VIA2_DDRB
+      rts
+
+_via2_output_porta:
+      sta VIA2_PORTA
+      rts
+
+_via2_output_portb:
+      sta VIA2_PORTB
       rts
